@@ -45,6 +45,8 @@ class MyWebServiceManager: NSObject {
     
     private func callManager(manager: AFHTTPSessionManager!, serviceType: WebServiceType!, url: String!, serviceName: String!, parameters: [String: String]?, images: [UIImage]?, fileName: String?) {
         
+        manager.responseSerializer.acceptableContentTypes = (NSSet(array: ["application/xml", "text/xml", "text/plain", "text/html"]) as! Set<String>)
+        
         // Print Full API URL
         if (parameters != nil) {
             var parameterDictionary = [String]()
