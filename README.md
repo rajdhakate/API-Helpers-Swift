@@ -17,13 +17,15 @@ Drag drop API Helpers into your Project.
 
 4. Set your ```parameters``` as ```Dictionary```.
 
-5. Call instance method ```callMyWebServiceManager``` .
+5. Set what type of log you want by ```logType``` = ```.None, .Default, .URLOnly, .URLWithResponse```
+
+6. Call instance method ```callMyWebServiceManager``` .
 
 - 
 
-6. Implement two required delegate methods. ```processCompleted``` & ```processFailed```.
+7. Implement two required delegate methods. ```processCompleted``` & ```processFailed```.
 
-7. [Optional] ```processOnGoing```
+8. [Optional] ```processOnGoing```
 
 # Support
 
