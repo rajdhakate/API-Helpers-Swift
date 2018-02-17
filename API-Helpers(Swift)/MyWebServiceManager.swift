@@ -17,8 +17,8 @@ enum WebServiceType {
 enum LogType {
     case None
     case Default
-    case UrlOnly
-    case UrlWithResponse
+    case URLOnly
+    case URLWithResponse
 }
 
 @objc protocol MyWebServiceManagerProtocol {
@@ -68,7 +68,7 @@ class MyWebServiceManager: NSObject {
                 let parameter = "\(key)=\(value ?? "nil")"
                 parameterDictionary.append(parameter)
             }
-            if (logType == .UrlOnly || logType == .UrlWithResponse) {
+            if (logType == .URLOnly || logType == .URLWithResponse) {
                 print("\(url)+?+\(parameterDictionary.joined(separator: "&"))")
             }
         }
@@ -88,7 +88,7 @@ class MyWebServiceManager: NSObject {
                         }
                     }
                 }, success: { (task, responseObject) in
-                    if (logType == .UrlWithResponse) {
+                    if (logType == .URLWithResponse) {
                         print("response for \(url!)...... \n\(responseObject ?? "nil")")
                     }
                     if self.conforms(to: MyWebServiceManagerProtocol.self) {
@@ -97,7 +97,7 @@ class MyWebServiceManager: NSObject {
                         print(MyWebServiceManager.DelegateNotSet)
                     }
                 }, failure: { (task, error) in
-                    if (logType == .UrlWithResponse) {
+                    if (logType == .URLWithResponse) {
                         print("error for \(url)...... \n\(error.localizedDescription)")
                     }
                     if self.conforms(to: MyWebServiceManagerProtocol.self) {
@@ -119,7 +119,7 @@ class MyWebServiceManager: NSObject {
                         }
                     }
                 }, success: { (task, responseObject) in
-                    if (logType == .UrlWithResponse) {
+                    if (logType == .URLWithResponse) {
                         print("response for \(url!)...... \n\(responseObject ?? "nil")")
                     }
                     if self.conforms(to: MyWebServiceManagerProtocol.self) {
@@ -128,7 +128,7 @@ class MyWebServiceManager: NSObject {
                         print(MyWebServiceManager.DelegateNotSet)
                     }
                 }, failure: { (task, error) in
-                    if (logType == .UrlWithResponse) {
+                    if (logType == .URLWithResponse) {
                         print("error for \(url)...... \n\(error.localizedDescription)")
                     }
                     if self.conforms(to: MyWebServiceManagerProtocol.self) {
@@ -149,7 +149,7 @@ class MyWebServiceManager: NSObject {
                         }
                     }
                 }, success: { (task, responseObject) in
-                    if (logType == .UrlWithResponse) {
+                    if (logType == .URLWithResponse) {
                         print("response for \(url!)...... \n\(responseObject ?? "nil")")
                     }
                     if self.conforms(to: MyWebServiceManagerProtocol.self) {
@@ -158,7 +158,7 @@ class MyWebServiceManager: NSObject {
                         print(MyWebServiceManager.DelegateNotSet)
                     }
                 }, failure: { (task, error) in
-                    if (logType == .UrlWithResponse) {
+                    if (logType == .URLWithResponse) {
                         print("error for \(url)...... \n\(error.localizedDescription)")
                     }
                     if self.conforms(to: MyWebServiceManagerProtocol.self) {
