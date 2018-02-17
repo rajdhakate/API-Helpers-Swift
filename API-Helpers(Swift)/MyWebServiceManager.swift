@@ -10,8 +10,15 @@ import UIKit
 import AFNetworking
 
 enum WebServiceType {
-    case post
-    case get
+    case Post
+    case Get
+}
+
+enum LogType {
+    case None
+    case Default
+    case UrlOnly
+    case UrlWithResponse
 }
 
 @objc protocol MyWebServiceManagerProtocol {
@@ -21,6 +28,8 @@ enum WebServiceType {
 }
 
 class MyWebServiceManager: NSObject {
+    
+    var logType: logType!
     
     private static let LOCALSERVER = ""
     private static let HOSTINGSERVER = ""
@@ -45,6 +54,10 @@ class MyWebServiceManager: NSObject {
     
     private func callManager(manager: AFHTTPSessionManager!, serviceType: WebServiceType!, url: String!, serviceName: String!, parameters: [String: String]?, images: [UIImage]?, fileName: String?) {
         
+        if !logType {
+            logType = .Default
+        }
+        
         manager.responseSerializer.acceptableContentTypes = (NSSet(array: ["application/xml", "text/xml", "text/plain", "text/html"]) as! Set<String>)
         
         // Print Full API URL
@@ -55,7 +68,9 @@ class MyWebServiceManager: NSObject {
                 let parameter = "\(key)=\(value ?? "nil")"
                 parameterDictionary.append(parameter)
             }
-            print("\(url)+?+\(parameterDictionary.joined(separator: "&"))")
+            if (logType == .UrlOnly || logType == .UrlWithResponse) {
+                print("\(url)+?+\(parameterDictionary.joined(separator: "&"))")
+            }
         }
         
         if (images != nil) {
@@ -73,14 +88,18 @@ class MyWebServiceManager: NSObject {
                         }
                     }
                 }, success: { (task, responseObject) in
-                    print("response for \(url!)...... \n\(responseObject ?? "nil")")
+                    if (logType == .UrlWithResponse) {
+                        print("response for \(url!)...... \n\(responseObject ?? "nil")")
+                    }
                     if self.conforms(to: MyWebServiceManagerProtocol.self) {
                         self.delegate.processComplete(serviceName: serviceName, responseObject: responseObject ?? "nil")
                     } else {
                         print(MyWebServiceManager.DelegateNotSet)
                     }
                 }, failure: { (task, error) in
-                    print("error for \(url)...... \n\(error.localizedDescription)")
+                    if (logType == .UrlWithResponse) {
+                        print("error for \(url)...... \n\(error.localizedDescription)")
+                    }
                     if self.conforms(to: MyWebServiceManagerProtocol.self) {
                         self.delegate.processFailed(serviceName: serviceName, errorDictionary: error)
                     } else {
@@ -90,7 +109,7 @@ class MyWebServiceManager: NSObject {
             }
         } else {
             // Call get service
-            if serviceType == .get {
+            if serviceType == .Get {
                 manager.get(url, parameters: parameters, progress: { (progress) in
                     DispatchQueue.global().async {
                         if self.conforms(to: MyWebServiceManagerProtocol.self) {
@@ -100,14 +119,18 @@ class MyWebServiceManager: NSObject {
                         }
                     }
                 }, success: { (task, responseObject) in
-                    print("response for \(url!)...... \n\(responseObject ?? "nil")")
+                    if (logType == .UrlWithResponse) {
+                        print("response for \(url!)...... \n\(responseObject ?? "nil")")
+                    }
                     if self.conforms(to: MyWebServiceManagerProtocol.self) {
                         self.delegate.processComplete(serviceName: serviceName, responseObject: responseObject ?? "nil")
                     } else {
                         print(MyWebServiceManager.DelegateNotSet)
                     }
                 }, failure: { (task, error) in
-                    print("error for \(url)...... \n\(error.localizedDescription)")
+                    if (logType == .UrlWithResponse) {
+                        print("error for \(url)...... \n\(error.localizedDescription)")
+                    }
                     if self.conforms(to: MyWebServiceManagerProtocol.self) {
                         self.delegate.processFailed(serviceName: serviceName, errorDictionary: error)
                     } else {
@@ -126,14 +149,18 @@ class MyWebServiceManager: NSObject {
                         }
                     }
                 }, success: { (task, responseObject) in
-                    print("response for \(url!)...... \n\(responseObject ?? "nil")")
+                    if (logType == .UrlWithResponse) {
+                        print("response for \(url!)...... \n\(responseObject ?? "nil")")
+                    }
                     if self.conforms(to: MyWebServiceManagerProtocol.self) {
                         self.delegate.processComplete(serviceName: serviceName, responseObject: responseObject ?? "nil")
                     } else {
                         print(MyWebServiceManager.DelegateNotSet)
                     }
                 }, failure: { (task, error) in
-                    print("error for \(url)...... \n\(error.localizedDescription)")
+                    if (logType == .UrlWithResponse) {
+                        print("error for \(url)...... \n\(error.localizedDescription)")
+                    }
                     if self.conforms(to: MyWebServiceManagerProtocol.self) {
                         self.delegate.processFailed(serviceName: serviceName, errorDictionary: error)
                     } else {
