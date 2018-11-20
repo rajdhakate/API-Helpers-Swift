@@ -1,4 +1,4 @@
-# API-Helpers-Swift-
+# API-Helpers-Swift
 API Helpers for Networking in iOS App. Swift version
 
 ## REQUISITE : [AFNetworking 3.1.0+](https://github.com/AFNetworking/AFNetworking/)
